@@ -4,7 +4,7 @@ use 5.006;
 use strict;
 use warnings;
 
-our $VERSION = "1.00";
+our $VERSION = "1.01";
 
 # subclass constructor
 sub subclass {
@@ -42,10 +42,8 @@ sub _stringify {
 
 # overload API
 use overload
-  # stringification
-  '""'  => \&_stringify,
-  # string comparison (from which eq, ne, le, etc. will be derived)
-  'cmp' => sub {my ($self, $arg) = @_; $self->_stringify cmp $arg},
+  '""'     => \&_stringify,   # stringification
+  fallback => 1,              # all other operators will be derived from '""'
   ;
 
 # be treated like an plain array by JSON::to_json()
@@ -234,7 +232,7 @@ L<http://search.cpan.org/dist/Array-PseudoScalar/>
 
 =head1 LICENSE AND COPYRIGHT
 
-Copyright 2011 Laurent Dami.
+Copyright 2011, 2012 Laurent Dami.
 
 This program is free software; you can redistribute it and/or modify it
 under the terms of either: the GNU General Public License as published

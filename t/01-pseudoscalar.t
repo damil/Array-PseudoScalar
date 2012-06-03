@@ -1,12 +1,13 @@
 #!perl
 use strict;
 use warnings;
-use Test::More tests => 11;
+use Test::More tests => 12;
 
 use Array::PseudoScalar;
 
 my $subclass      = Array::PseudoScalar->subclass(';');
 my $schizophrenic = $subclass->new(qw/this is a pseudoscalar/);
+my $schizo_num    = $subclass->new(qw/123/);
 
 is("$subclass", 'Array::PseudoScalar::;', "subclass name");
 
@@ -24,6 +25,8 @@ $schizophrenic =~ s/this/that/;
 is($schizophrenic, "that;is;a;nice;pseudoscalar", "regex subst");
 eval{print @$schizophrenic};
 ok($@, "no longer an array");
+
+ok($schizo_num == 123, "num comparison");
 
 my $subclass_again = Array::PseudoScalar->subclass(';');
 is ($subclass_again, $subclass, "reused subclass");
