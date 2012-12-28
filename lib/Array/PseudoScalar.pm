@@ -4,7 +4,7 @@ use 5.006;
 use strict;
 use warnings;
 
-our $VERSION = "1.01";
+our $VERSION = "1.02";
 
 # subclass constructor
 sub subclass {
@@ -17,7 +17,7 @@ sub subclass {
   no strict 'refs';
 
   # build the subclass on the fly, if not already present
-  @{$subclass.'::ISA'} = ($class) unless %{$subclass.'::'};
+  @{$subclass.'::ISA'} = ($class) unless @{$subclass.'::ISA'};
 
   return $subclass;
 }
